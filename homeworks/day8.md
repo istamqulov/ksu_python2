@@ -38,7 +38,7 @@ data = client.get(
     path="/gh/fawazahmed0/currency-api@1/latest/currencies.json",
     params={"q": "someqeury", "a": 5}
 )
-"https://cdn.jsdelivr.net"/gh/fawazahmed0/currency-api@1/latest/currencies.json?q=somequery&a=5"
+# "https://cdn.jsdelivr.net"/gh/fawazahmed0/currency-api@1/latest/currencies.json?q=somequery&a=5"
 
 another_data = client.post(
     path="/gh/fawazahmed0/currency-api@1/latest/currencies/",
