@@ -1,5 +1,8 @@
+from typing import Optional, Iterable
+
 import requests
 import datetime
+import csv
 
 
 
@@ -68,13 +71,46 @@ def print_currencies_table_for(currency_code):
     print_rates_change("btc")
 
 
-currencies = Currencies()
+def export_csv(base_currency: str, days: int = 3, target_currencies: list = None):  # Optional[Iterable]
+    current_time = datetime.datetime.now()
+    currencies = Currencies()
 
-print(currencies.compare_currency_rate("rub", "tjs", "2022-02-11", "2022-02-26"))
-print(currencies.get_rates_history("rub", "tjs", days=10))
-data = currencies.load_currencies()
+    results = {}
+    if target_currencies is None:
+        target_currencies = list(currencies.load_currencies().keys())
 
-# for key, value in data.items():
-#     print(key.upper(), value)
-# codes = data.keys()
-# print(print_currencies_table_for('rub'))
+    for day in range(days):
+        day_time = current_time - datetime.timedelta(days=day)
+        date_string = day_time.strftime("%Y-%m-%d")
+        rates = currencies.get_currencies_for(base_currency, date_string if day else 'latest')
+
+        results[date_string] = {}
+
+        for currency in target_currencies:
+            results[date_string][currency] = rates[currency]
+
+    with open('export_rates_%s.csv' % base_currency, 'w') as csv_file:
+        writer = csv.writer(csv_file)
+        writer.writerow(
+            [base_currency, ] + list(results.keys())
+        )
+        for currency in target_currencies:
+            row = [currency]
+
+            for date in results.keys():
+                row.append(results[date][currency])
+            writer.writerow(row)
+
+
+export_csv('rub', days=5)
+#
+# currencies = Currencies()
+#
+# print(currencies.compare_currency_rate("rub", "tjs", "2022-02-11", "2022-02-26"))
+# print(currencies.get_rates_history("rub", "tjs", days=10))
+# data = currencies.load_currencies()
+#
+# # for key, value in data.items():
+# #     print(key.upper(), value)
+# # codes = data.keys()
+# # print(print_currencies_table_for('rub'))
