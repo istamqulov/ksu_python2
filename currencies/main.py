@@ -75,11 +75,22 @@ def export_csv(base_currency: str, days: int = 3, target_currencies: list = None
     current_time = datetime.datetime.now()
     currencies = Currencies()
 
+    # Будет хранить данные в словаре в следующем формате
+    """
+        {
+            "2022-02-28": {
+                 "usd": 11.28
+            }
+        }
+    """
     results = {}
+
     if target_currencies is None:
+        # Если валюты не указаны получить все валюты и использовать их
         target_currencies = list(currencies.load_currencies().keys())
 
     for day in range(days):
+        # итерация по дням
         day_time = current_time - datetime.timedelta(days=day)
         date_string = day_time.strftime("%Y-%m-%d")
         rates = currencies.get_currencies_for(base_currency, date_string if day else 'latest')
@@ -87,17 +98,23 @@ def export_csv(base_currency: str, days: int = 3, target_currencies: list = None
         results[date_string] = {}
 
         for currency in target_currencies:
+            # вставка данных  в наш results
             results[date_string][currency] = rates[currency]
 
+    # добавляем базовую валюту в название файла чтобы исключить конфликты
     with open('export_rates_%s.csv' % base_currency, 'w') as csv_file:
+
         writer = csv.writer(csv_file)
+
+        # записываем первую строку
+        dates = list(results.keys())
         writer.writerow(
-            [base_currency, ] + list(results.keys())
+            [base_currency, ] + dates
         )
         for currency in target_currencies:
             row = [currency]
 
-            for date in results.keys():
+            for date in dates:
                 row.append(results[date][currency])
             writer.writerow(row)
 
