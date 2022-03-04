@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добро пожаловать!</title>
+</head>
+<body>
+
+<h1>Добро пожаловать на курсы валют!</h1>
+<b>Текущее время: {{ current_time }}</b>
+
+<ul>
+    {% for currency_code, currency_name in currencies %}
+       <li>
+           <a href="/currencies/{{currency_code}}">
+                {{currency_name}}
+           </a>
+       </li>
+    {% endfor %}
+</ul>
+</body>
+</html>
