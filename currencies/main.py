@@ -66,11 +66,3 @@ def print_currencies_table_for(currency_code):
     print_rates_change("kzt", 4)
     print_rates_change("uzs", 4)
     print_rates_change("btc")
-
-
-
-
-# for key, value in data.items():
-#     print(key.upper(), value)
-# codes = data.keys()
-# print(print_currencies_table_for('rub'))

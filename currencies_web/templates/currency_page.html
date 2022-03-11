@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Курсы валют для {{currency_code}}</title>
+</head>
+<body>
+
+<a href="/"> Назад на главную страницу</a>
+
+<h1 class="h1">Курсы валют для {{currency_code}}  на {{ date }}</h1>
+<form action="">
+    <input type="date" name="date" min="2020-11-22"  max="{{current_date}}" value="{{date}}" class="input"/>
+    <button class="btn btn-outline-primary btn-sm" type="submit">Показать</button>
+</form>
+<table class="rates table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Валюта
+            </th>
+            <th>
+                Курс обмена
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for target_code, target_value in rates.items() %}
+        <tr>
+
+            <td>{{target_code}}</td>
+            <td>{{target_value}}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</body>
+</html>
