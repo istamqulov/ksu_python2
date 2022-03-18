@@ -27,9 +27,6 @@ session = sessionmaker(
 )()
 Base.metadata.create_all(engine)
 
-service = Currencies()
-currencies = service.load_currencies()
-
 
 def create_initial_currencies():
     for code, name in currencies.items():

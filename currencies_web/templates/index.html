@@ -10,10 +10,10 @@
 <b>Текущее время: {{ current_time }}</b>
 
 <ul>
-    {% for currency_code, currency_name in currencies %}
+    {% for currency in currencies %}
        <li>
-           <a href="/currencies/{{currency_code}}">
-                {{currency_name}}
+           <a href="/currencies/{{currency.code}}">
+                {{currency.name}}
            </a>
        </li>
     {% endfor %}

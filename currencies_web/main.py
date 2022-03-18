@@ -3,21 +3,22 @@ from flask import Flask, render_template, request
 from currencies.main import *
 from datetime import datetime
 
+from db import session, Currency
+
 app = Flask(__name__)
 currencies_service = Currencies()
 
 
 @app.route("/")
 def index():
-    currencies_data = currencies_service.load_currencies()
-
+    # currencies_data = currencies_service.load_currencies()
+    currencies = session.query(Currency).all()
     current_time = datetime.now()
-    print(currencies_data.items())
 
     return render_template(
         "index.html",
         current_time=current_time,
-        currencies=currencies_data.items()
+        currencies=currencies
     )
 
 
