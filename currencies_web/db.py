@@ -41,7 +41,3 @@ def create_initial_currencies():
     session.commit()
 
 
-usd = session.query(Currency).filter(
-   Currency.code == 'usd'
-).first()
-print(usd)
