@@ -1,5 +1,7 @@
+import time
+
 from sqlalchemy import Integer, Column, String, create_engine
-from sqlalchemy.orm import declarative_base, sessionmaker
+from sqlalchemy.orm import declarative_base, sessionmaker, Session
 from currencies.main import Currencies
 
 Base = declarative_base()
@@ -22,7 +24,7 @@ engine = create_engine(
 )
 
 
-session = sessionmaker(
+session: Session = sessionmaker(
     bind=engine,
 )()
 Base.metadata.create_all(engine)
@@ -38,3 +40,11 @@ def create_initial_currencies():
     session.commit()
 
 
+uzs = session.query(Currency).filter(Currency.code == 'uzs').first()
+
+print(uzs)
+
+
+time.sleep(20)
+session.refresh(uzs)
+print(uzs)

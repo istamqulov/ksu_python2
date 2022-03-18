@@ -11,7 +11,7 @@ currencies_service = Currencies()
 
 @app.route("/")
 def index():
-    # currencies_data = currencies_service.load_currencies()
+
     currencies = session.query(Currency).all()
     current_time = datetime.now()
 
